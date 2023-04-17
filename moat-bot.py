@@ -7,16 +7,22 @@ from langchain.vectorstores import FAISS
 from colorama import Fore
 import textwrap
 
-
-loader = PyPDFLoader("~/Downloads/merchant_prince.pdf")
-pages = loader.load_and_split()
-
+index_dir = "./index"
 embeddings = OpenAIEmbeddings()
 
-db = Chroma.from_documents(pages, embeddings)
-retriever = db.as_retriever()
+try:
+    faiss_index = FAISS.load_local(folder_path=index_dir, embeddings=embeddings)
+except Exception as e:
+    print(Fore.RED + "Couldn't load index from disk. Recreating")
+    loader = PyPDFLoader("~/Downloads/merchant_prince.pdf")
+    pages = loader.load_and_split()
+    faiss_index = FAISS.from_documents(pages, OpenAIEmbeddings())
+    faiss_index.save_local(folder_path=index_dir)
 
-faiss_index = FAISS.from_documents(pages, OpenAIEmbeddings())
+#db = Chroma.from_documents(pages, embeddings)
+#retriever = db.as_retriever()
+
+
 retriever = faiss_index.as_retriever()
 
 llm=OpenAI(temperature=0,max_tokens=512)
