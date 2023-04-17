@@ -1,13 +1,11 @@
 from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
-from langchain.indexes import VectorstoreIndexCreator
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import Chroma
 from langchain.vectorstores import FAISS
 from colorama import Fore
 import textwrap
-from langchain.memory import ConversationBufferMemory
 
 
 loader = PyPDFLoader("~/Downloads/merchant_prince.pdf")
@@ -33,4 +31,12 @@ while True:
     query = input(Fore.GREEN + "Ask me anything:\n")
     result = qa({"query": query})
     print(Fore.BLUE + textwrap.fill(result["result"],width=150))
-    print(Fore.CYAN + textwrap.fill(result["source_documents"], width=150))
+    sources = result["source_documents"]
+    for index, source in enumerate(sources):
+        page_num = source.metadata["page"]
+        page_content = source.page_content
+        print(Fore.CYAN, f"=========== SOURCE {index+1} ===========")
+        print(Fore.CYAN + textwrap.fill(f"""Page: {page_num}""", width=150))
+        print(Fore.CYAN + textwrap.fill(page_content, width=150))
+        print(Fore.CYAN + f"\n")
+

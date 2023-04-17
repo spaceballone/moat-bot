@@ -1,3 +1,7 @@
 openai
 langchain
 colorama
+pypdf
+chromadb
+tiktoken
+faiss-cpu
