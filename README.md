@@ -20,5 +20,5 @@ pip install -r requirements.txt
 Finally, run the file! 
 
 ```
-python moat-bot.py
+streamlit run main.py
 ```

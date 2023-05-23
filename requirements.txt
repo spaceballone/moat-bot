@@ -5,3 +5,4 @@ pypdf
 chromadb
 tiktoken
 faiss-cpu
+tiktoken

@@ -31,7 +31,7 @@ llm=OpenAI(temperature=0,max_tokens=512)
 
 qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever, return_source_documents=True)
 
-print(Fore.GREEN + "Hi! I'm AlanBot! A bot trained to answer questions from the 1536th dimension (of Alan and Naz's new book)!")
+print(Fore.GREEN + "Hi! I'm MOAT Bot! A bot trained to answer questions from the 1536th dimension (of Alan and Naz's new book)!")
 
 while True:
     query = input(Fore.GREEN + "Ask me anything:\n")
